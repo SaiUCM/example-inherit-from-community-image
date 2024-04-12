@@ -2,14 +2,7 @@ channels:
   - conda-forge
 
 dependencies:
-  - jupyterhub-singleuser>=4.1.5
-
-  # Everyone wants to use nbgitpuller for everything, so let's do that
-  - nbgitpuller=1.2.1
-  # Install packages from pip
-  - pip
-  - pip:
-    - datascience==0.17.6
-    - plotly==5.19.0
-    - otter-grader==5.4.1
-    
+  - nbgitpuller=1.2.*
+  - datascience==0.17.*
+  - plotly==5.19.*
+  - otter-grader==5.4.*
