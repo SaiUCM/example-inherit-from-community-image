@@ -12,3 +12,4 @@ dependencies:
     - datascience==0.17.6
     - plotly==5.19.0
     - otter-grader==5.4.1
+    
