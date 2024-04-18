@@ -6,3 +6,4 @@ dependencies:
   - datascience==0.17.*
   - plotly==5.19.*
   - otter-grader==5.4.*
+  - kaleido
