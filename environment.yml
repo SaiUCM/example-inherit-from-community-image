@@ -7,3 +7,4 @@ dependencies:
   - plotly==5.19.*
   - otter-grader==5.4.*
   - conda-forge::python-kaleido=0.2.*
+  - conda-forge::python-poppler
