@@ -9,4 +9,4 @@ dependencies:
   - conda-forge::python-kaleido=0.2.*
   - conda-forge::python-poppler
   - conda-forge::jupyter-resource-usage
-  - conda install conda-forge::pytorch
+  - conda-forge::pytorch
