@@ -10,3 +10,4 @@ dependencies:
   - conda-forge::python-poppler
   - conda-forge::jupyter-resource-usage
   - conda-forge::pytorch
+  - conda-forge::torchvision
