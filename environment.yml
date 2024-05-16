@@ -6,9 +6,11 @@ dependencies:
   - datascience==0.17.*
   - plotly==5.19.*
   - otter-grader==5.4.*
-  - ISLP==0.3.*
   - conda-forge::python-kaleido=0.2.*
   - conda-forge::python-poppler
   - conda-forge::jupyter-resource-usage
   - conda-forge::pytorch
   - conda-forge::torchvision
+  - pip
+  - pip:
+    - ISLP==0.3.22
