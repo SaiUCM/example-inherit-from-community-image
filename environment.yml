@@ -14,3 +14,4 @@ dependencies:
   - pip
   - pip:
     - ISLP==0.3.22
+    - babypandas==0.1.9
