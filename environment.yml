@@ -11,6 +11,7 @@ dependencies:
   - conda-forge::jupyter-resource-usage
   - conda-forge::pytorch
   - conda-forge::torchvision
+  - conda-forge::ipyvuetify
   - pip
   - pip:
     - ISLP==0.3.22
