@@ -12,7 +12,6 @@ dependencies:
   - conda-forge::pytorch
   - conda-forge::torchvision
   - conda-forge::ipyvuetify
-  - conda-forge::nbconvert-webpdf
   - pip
   - pip:
     - ISLP==0.3.22
