@@ -12,9 +12,10 @@ dependencies:
   - conda-forge::pytorch
   - conda-forge::torchvision
   - conda-forge::ipyvuetify
-  - conda-forge::playwright
   - pip
   - pip:
     - ISLP==0.3.22
     - babypandas==0.1.9
     - solara==1.38.0
+    - nbconvert[webpdf]
+    - pytest-playwright
