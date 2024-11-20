@@ -24,7 +24,6 @@ USER ${NB_UID}
 COPY environment.yml /tmp/environment.yml
 
 RUN mamba env update --prefix ${CONDA_DIR} --file /tmp/environment.yml
-RUN mamba run -n playwright install-deps
 
 COPY overrides.json /opt/conda/share/jupyter/lab/settings/overrides.json
 
