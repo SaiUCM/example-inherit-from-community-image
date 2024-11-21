@@ -16,7 +16,7 @@ RUN apt-get update --yes && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install Playwright dependencies
-# RUN npx playwright install-deps
+RUN npx playwright install-deps
 
 # Switch back to jovyan user
 USER ${NB_UID}
