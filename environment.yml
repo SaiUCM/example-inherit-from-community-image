@@ -5,6 +5,8 @@ dependencies:
   - nbgitpuller=1.2.*
   - datascience==0.17.5
   - plotly==5.19.*
+  - pandas==2.0.0
+  - ipywidgets==8.1.5
   - otter-grader==6.0.4
   - conda-forge::python-kaleido=0.2.*
   - conda-forge::python-poppler
@@ -14,7 +16,6 @@ dependencies:
   - conda-forge::ipyvuetify
   - pip
   - pip:
-    - ISLP==0.3.22
     - babypandas==0.1.9
     - solara==1.38.0
     - nbconvert[webpdf]
