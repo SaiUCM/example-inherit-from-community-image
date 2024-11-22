@@ -13,8 +13,8 @@ dependencies:
   - conda-forge::ipyvuetify
   - pip
   - pip:
-    - babypandas==0.1.9
-    - pandas==2.2.3
+    - babypandas
+    - pandas
     - ipywidgets==8.1.5
     - otter-grader==6.0.4
     - solara==1.38.0
