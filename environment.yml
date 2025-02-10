@@ -11,6 +11,7 @@ dependencies:
   - conda-forge::pytorch
   - conda-forge::torchvision
   - conda-forge::ipyvuetify
+  - conda-forge::bash_kernel
   - pip
   - pip:
     - babypandas
@@ -20,4 +21,3 @@ dependencies:
     - solara==1.38.0
     - nbconvert[webpdf]
     - pytest-playwright
-    - bash_kernel
