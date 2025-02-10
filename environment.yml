@@ -20,4 +20,4 @@ dependencies:
     - solara==1.38.0
     - nbconvert[webpdf]
     - pytest-playwright
-    - install bash_kernel
+    - bash_kernel
