@@ -18,6 +18,7 @@ RUN apt-get update --yes && \
 # Install Playwright dependencies
 RUN npx playwright install-deps
 
+RUN python -m bash_kernel.install
 # Switch back to jovyan user
 USER ${NB_UID}
 
