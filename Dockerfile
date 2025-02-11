@@ -31,6 +31,9 @@ RUN conda install python=3.11.8
 
 COPY overrides.json /opt/conda/share/jupyter/lab/settings/overrides.json
 
+# Clear Jupyter notebook outputs before running tests
+RUN find . -name "*.ipynb" -exec jupyter nbconvert --clear-output --inplace {} \;
+
 COPY image-tests image-tests
 
 RUN ls
