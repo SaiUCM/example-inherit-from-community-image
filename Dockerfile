@@ -29,7 +29,5 @@ RUN mamba env update --prefix ${CONDA_DIR} --file /tmp/environment.yml
 COPY overrides.json /opt/conda/share/jupyter/lab/settings/overrides.json
 
 COPY image-tests image-tests
-RUN pip install pytest pytest-notebook && \
-    pytest --nb-update || true
 
 RUN ls
