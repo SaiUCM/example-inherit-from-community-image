@@ -5,7 +5,7 @@ dependencies:
   - nbgitpuller=1.2.*
   - datascience==0.17.5
   - plotly==5.19.*
-  - conda-forge::python-kaleido=0.2.*
+  - conda-forge::python-kaleido
   - conda-forge::python-poppler
   - conda-forge::jupyter-resource-usage
   - conda-forge::pytorch
