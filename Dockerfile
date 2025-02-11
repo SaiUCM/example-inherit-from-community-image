@@ -2,8 +2,8 @@
 #
 # To update the base image, look at more recent image tags at
 # https://quay.io/repository/jupyter/scipy-notebook?tab=tags&tag=latest
-# FROM quay.io/jupyter/scipy-notebook:2024-03-31
-FROM quay.io/jupyter/scipy-notebook:python-3.11.8
+FROM quay.io/jupyter/scipy-notebook:2024-03-31
+
 
 # Switch to root user
 USER root
