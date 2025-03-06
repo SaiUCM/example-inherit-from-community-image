@@ -12,6 +12,7 @@ dependencies:
   - conda-forge::torchvision
   - conda-forge::ipyvuetify
   - conda-forge::bash_kernel
+  - conda-forge::sentence-transformers
   - pip
   - pip:
     - babypandas
