@@ -22,3 +22,4 @@ dependencies:
     - solara==1.38.0
     - nbconvert[webpdf]
     - pytest-playwright
+    - ISLP==0.4.0
