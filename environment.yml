@@ -13,6 +13,7 @@ dependencies:
   - conda-forge::ipyvuetify
   - conda-forge::bash_kernel
   - conda-forge::sentence-transformers
+  - conda-forge::r-ottr
   - pip
   - pip:
     - babypandas
@@ -24,6 +25,3 @@ dependencies:
     - pytest-playwright
     - ISLP==0.4.0
     - astroML
-
-  # Otter for R
-  - r-ottr
