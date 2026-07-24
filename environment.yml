@@ -13,8 +13,6 @@ dependencies:
   - conda-forge::ipyvuetify
   - conda-forge::bash_kernel
   - conda-forge::sentence-transformers
-  - conda-forge::r-ottr
-  - conda-forge::pymor
   - pip
   - pip:
     - babypandas
@@ -27,3 +25,4 @@ dependencies:
     - ISLP==0.4.0
     - astroML
     - jupyterlab-a11y-checker==0.2.6
+    - pyarmor
