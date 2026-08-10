@@ -2,6 +2,7 @@ channels:
   - conda-forge
 
 dependencies:
+  - numpy<2
   - nbgitpuller=1.2.*
   - datascience==0.17.5
   - plotly==5.19.*
