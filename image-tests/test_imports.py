@@ -9,7 +9,7 @@ PACKAGES = [
     "plotly",
     "torch",
     "torchvision",
-    # "sentence_transformers", broken package
+    # "sentence_transformers", broken package see #6
     "ipyvuetify",
     "ipywidgets",
     "otter",
