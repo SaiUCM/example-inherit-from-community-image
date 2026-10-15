@@ -1,0 +1,63 @@
+name: Build, Test and push container image
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+env: 
+  IMAGE: quay.io/cirt_ucm/jupyter-scipy-xarray
+
+jobs: 
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+    - name: cleanup disk space
+      run: | 
+        sudo rm -rf /usr/local/lib/android /usr/share/dotnet /opt/ghc
+        sudo rm -rf /opt/hostedtoolcache
+        df -h
+    - uses: actions/checkout@v4
+
+    - uses: docker/setup-buildx-action@v3
+
+    - name: Log into Quay.io
+      if: github.ref == 'refs/heads/main'
+      uses: docker/login-action@v3
+      with:
+        registry: quay.io
+        username: ${{ secrets.QUAY_USERNAME }}
+        password: ${{ secrets.QUAY_PASSWORD }}
+
+    - name: Compute tag
+      id: meta 
+      run: echo "tag=$(date +%Y-%m-%d)-${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
+    
+    - name: build
+      uses: docker/build-push-action@v5
+      with:
+        context: . 
+        load: true
+        tags: ${{ env.IMAGE }}:${{ steps.meta.outputs.tag }}
+        cache-from: type=registry,ref=${{ env.IMAGE }}:latest
+        cache-to: type=inline
+
+    - name: Run image tests
+      run: |
+        docker run --rm ${{ env.IMAGE }}:${{ steps.meta.outputs.tag }} \
+          pytest -v /home/jovyan/image-tests
+
+    - name: push
+      if: github.ref == 'refs/heads/main'
+      run: | 
+        docker tag ${{ env.IMAGE }}:${{ steps.meta.outputs.tag }} ${{ env.IMAGE }}:latest
+        docker push ${{ env.IMAGE }}:${{ steps.meta.outputs.tag }}
+        docker push ${{ env.IMAGE }}:latest
+
+    - run: df -h
+      if: always()
+      
+
+
+
