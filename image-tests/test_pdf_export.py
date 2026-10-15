@@ -7,7 +7,13 @@ import nbformat
 
 def test_chromium_present():
     """Fast check — fails in ms instead of waiting on the export below."""
-    root = pathlib.Path(os.environ["PLAYWRIGHT_BROWSERS_PATH"])
+    root = os.environ.get("PLAYWRIGHT_BROWSERS_PATH")
+    assert root, (
+        "PLAYWRIGHT_BROWSERS_PATH is unset. Browsers would land in "
+        "~/.cache/ms-playwright, which the hub's persistent home volume "
+        "mounts over at runtime."
+    )
+    root = pathlib.Path(root)
     assert root.is_dir(), f"{root} missing"
     assert any(root.glob("chromium-*")), f"no chromium in {list(root.iterdir())}"
 
@@ -19,10 +25,11 @@ def test_webpdf_export(tmp_path):
     src = tmp_path / "sample.ipynb"
     nbformat.write(nb, str(src))
 
-    subprocess.run(
+    result = subprocess.run(
         ["jupyter", "nbconvert", "--to", "webpdf", str(src)],
-        check=True, capture_output=True, text=True, timeout=300,
+        capture_output=True, text=True, timeout=300,
     )
+    assert result.returncode == 0, result.stderr
     assert (tmp_path / "sample.pdf").stat().st_size > 0
 
 
