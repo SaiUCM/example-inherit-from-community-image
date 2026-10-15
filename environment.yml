@@ -18,7 +18,6 @@ dependencies:
   - pip
   - pip:
     - babypandas
-    - pandas
     - ipywidgets==8.1.5
     - otter-grader[grading,plugins]==6.1.3
     - solara==1.38.0
@@ -28,3 +27,4 @@ dependencies:
     - astroML
     - jupyterlab-a11y-checker==0.2.6
     - pyarmor
+    - pytest
