@@ -10,7 +10,7 @@ env:
   IMAGE: quay.io/cirt_ucm/jupyter-scipy-xarray
 
 jobs: 
-  build-and-push:
+  build-test-pushb:
     runs-on: ubuntu-latest
     steps:
     - name: cleanup disk space
@@ -18,7 +18,7 @@ jobs:
         sudo rm -rf /usr/local/lib/android /usr/share/dotnet /opt/ghc
         sudo rm -rf /opt/hostedtoolcache
         df -h
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
 
     - uses: docker/setup-buildx-action@v3
 
@@ -35,7 +35,7 @@ jobs:
       run: echo "tag=$(date +%Y-%m-%d)-${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
     
     - name: build
-      uses: docker/build-push-action@v5
+      uses: docker/build-push-action@v6
       with:
         context: . 
         load: true
