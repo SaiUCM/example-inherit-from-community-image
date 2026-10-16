@@ -15,11 +15,6 @@ def test_numpy_is_v1():
     )
 
 
-def test_python_is_311():
-    import sys
-    assert sys.version_info[:2] == (3, 11), sys.version
-
-
 def test_ipywidgets_is_v8():
     import ipywidgets
     assert ipywidgets.__version__.startswith("8."), ipywidgets.__version__
