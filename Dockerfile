@@ -1,5 +1,6 @@
-# Inherit from an upstream image
-FROM quay.io/jupyter/scipy-notebook:2026-03-09 
+# Inherit from an upstream image but keeping the python version as 3.11
+FROM quay.io/jupyter/scipy-notebook:python-3.11
+#FROM quay.io/jupyter/scipy-notebook:2026-03-09 
 # You can also inherit from pangeo base image instead. Remove the
 # previous line and uncomment the next line
 # FROM pangeo/pangeo-notebook:2026.01.30
