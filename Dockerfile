@@ -26,9 +26,6 @@ COPY environment.yml /tmp/environment.yml
 
 RUN mamba env update --prefix ${CONDA_DIR} --file /tmp/environment.yml && \
     python -m bash_kernel.install && \
-    if [ "$(uname -m)" = "x86_64" ]; then \
-        mamba install --prefix ${CONDA_DIR} -y conda-forge::cpuonly; \
-    fi && \
     mamba clean --all -y && \
     pip cache purge
 
