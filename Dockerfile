@@ -31,20 +31,8 @@ RUN mamba env update --prefix ${CONDA_DIR} --file /tmp/environment.yml && \
 
 # datascience 0.17.5 uses pkg_resources (removed in setuptools 84+).
 # Patch maps.py to use importlib.resources instead.
-RUN python - << 'EOF'
-import re, pathlib
-p = pathlib.Path("/opt/conda/lib").glob("python3.*/site-packages/datascience/maps.py")
-path = next(p)
-txt = path.read_text()
-txt = txt.replace("import pkg_resources", "import importlib.resources as _ir")
-txt = re.sub(
-    r'pkg_resources\.resource_filename\(__name__,\s*("geodata/geocode_states\.csv")\)',
-    r'str(_ir.files(__name__) / \1)',
-    txt,
-)
-path.write_text(txt)
-print("patched", path)
-EOF
+COPY patch_datascience.py /tmp/patch_datascience.py
+RUN python /tmp/patch_datascience.py
 
 COPY overrides.json /opt/conda/share/jupyter/lab/settings/overrides.json
 
