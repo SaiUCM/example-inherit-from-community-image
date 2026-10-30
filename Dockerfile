@@ -2,7 +2,7 @@
 #
 # To update the base image, look at more recent image tags at
 # https://quay.io/repository/jupyter/scipy-notebook?tab=tags&tag=latest
-FROM quay.io/jupyter/scipy-notebook:2024-03-31
+FROM quay.io/jupyter/scipy-notebook:2026-10-28
 
 # Install chromium outside /home/jovyan so it survives the JupyterHub
 # persistent-storage volume mount that shadows the home directory at runtime.
@@ -19,23 +19,30 @@ RUN apt-get update --yes && \
     gcc && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Install Playwright system-level dependencies
-RUN npx playwright install-deps
-
 # Switch back to jovyan user
 USER ${NB_UID}
 
 COPY environment.yml /tmp/environment.yml
 
 RUN mamba env update --prefix ${CONDA_DIR} --file /tmp/environment.yml && \
-    python -m bash_kernel.install
+    python -m bash_kernel.install && \
+    mamba clean --all -y && \
+    pip cache purge
+
+# datascience 0.17.5 uses pkg_resources (removed in setuptools 84+).
+# Patch maps.py to use importlib.resources instead.
+COPY patch_datascience.py /tmp/patch_datascience.py
+RUN python /tmp/patch_datascience.py
 
 COPY overrides.json /opt/conda/share/jupyter/lab/settings/overrides.json
 
-# Install Chromium browser at PLAYWRIGHT_BROWSERS_PATH so it is accessible
-# outside the home directory at JupyterHub runtime.
+# Install Playwright system deps and Chromium browser as root.
+# Uses the Python playwright CLI (available after mamba env update above).
+# Chromium is placed at PLAYWRIGHT_BROWSERS_PATH outside /home/jovyan so it
+# survives the JupyterHub persistent-storage volume mount at runtime.
 USER root
-RUN mkdir -p ${PLAYWRIGHT_BROWSERS_PATH} && \
+RUN playwright install-deps chromium && \
+    mkdir -p ${PLAYWRIGHT_BROWSERS_PATH} && \
     playwright install chromium && \
     chmod -R a+rX ${PLAYWRIGHT_BROWSERS_PATH}
 
