@@ -25,11 +25,6 @@ def test_ipywidgets_is_v8():
     assert ipywidgets.__version__.startswith("8."), ipywidgets.__version__
 
 
-@pytest.mark.xfail(
-    reason="kaleido 1.0.0 vs plotly 5.19 — fig.write_image() is broken in the "
-           "image today. Pin python-kaleido=0.2.1 or bump plotly>=6.1.1. See #5.",
-    strict=True,
-)
 def test_kaleido_plotly_compatible():
     from importlib.metadata import version
     import plotly

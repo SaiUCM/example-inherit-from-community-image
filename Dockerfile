@@ -1,31 +1,50 @@
-# Inherit from an upstream image but keeping the python version as 3.11
-FROM quay.io/jupyter/scipy-notebook:python-3.11
-#FROM quay.io/jupyter/scipy-notebook:2026-03-09 
-# You can also inherit from pangeo base image instead. Remove the
-# previous line and uncomment the next line
-# FROM pangeo/pangeo-notebook:2026.01.30
+# Inherit from an upstream image
+#
+# To update the base image, look at more recent image tags at
+# https://quay.io/repository/jupyter/scipy-notebook?tab=tags&tag=latest
+FROM quay.io/jupyter/scipy-notebook:2024-03-31
 
-# We copy the `environment.yml` file in this repo, only adding in extra
-# packages that aren't in our base image.
-COPY environment.yml /tmp/environment.yml
-RUN mamba env update --prefix ${CONDA_DIR} --file /tmp/environment.yml && \
-    mamba clean --all --force-pkgs-dirs --yes
+# Install chromium outside /home/jovyan so it survives the JupyterHub
+# persistent-storage volume mount that shadows the home directory at runtime.
+ENV PLAYWRIGHT_BROWSERS_PATH=/opt/ms-playwright
 
-# Writes the Jupyter Kernelspec. The Conda package alone does not 
-# register Bash in the launcher.
-RUN python -m bash_kernel.install
-
-# `playwright install-deps` only pulls OS libraries; the browser itself
-# is a separate install. Browsers default to ~/.cache/ms-playwright,
-# which the hub's persistent home volume mounts over at runtime, so
-# they go outside $HOME.
-
-ENV PLAYWRIGHT_BROWSERS_PATH=/opt/playwright
+# Switch to root user
 USER root
-RUN playwright install --with-deps chromium && \
-    chmod -R a+rX /opt/playwright
+
+# Command line as root user
+RUN apt-get update --yes && \
+    apt-get install --yes --no-install-recommends \
+    fonts-dejavu \
+    gfortran \
+    gcc && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Install Playwright system-level dependencies
+RUN npx playwright install-deps
+
+# Switch back to jovyan user
 USER ${NB_UID}
+
+COPY environment.yml /tmp/environment.yml
+
+RUN mamba env update --prefix ${CONDA_DIR} --file /tmp/environment.yml && \
+    python -m bash_kernel.install
 
 COPY overrides.json /opt/conda/share/jupyter/lab/settings/overrides.json
 
-COPY image-tests image-tests
+# Install Chromium browser at PLAYWRIGHT_BROWSERS_PATH so it is accessible
+# outside the home directory at JupyterHub runtime.
+USER root
+RUN mkdir -p ${PLAYWRIGHT_BROWSERS_PATH} && \
+    playwright install chromium && \
+    chmod -R a+rX ${PLAYWRIGHT_BROWSERS_PATH}
+
+# Copy image-tests to /home/jovyan (local docker testing) and /srv/repo
+# (repo2docker-action with REPO_DIR=/srv/repo runs pytest from /srv/repo).
+RUN mkdir -p /srv/repo
+COPY image-tests /home/jovyan/image-tests
+COPY image-tests /srv/repo/image-tests
+RUN chown -R ${NB_UID}:${NB_GID} /home/jovyan/image-tests /srv/repo
+
+USER ${NB_UID}
+
