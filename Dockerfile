@@ -24,15 +24,11 @@ USER ${NB_UID}
 
 COPY environment.yml /tmp/environment.yml
 
-RUN mamba env update --prefix ${CONDA_DIR} --file /tmp/environment.yml
-
-# Install the specific Python version (3.11.8)
-RUN conda install python=3.11.8
-RUN python -m bash_kernel.install
+RUN mamba env update --prefix ${CONDA_DIR} --file /tmp/environment.yml && \
+    python -m bash_kernel.install
 
 COPY overrides.json /opt/conda/share/jupyter/lab/settings/overrides.json
 
 
 COPY image-tests image-tests
 
-RUN ls
