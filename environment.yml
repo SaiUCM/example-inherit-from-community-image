@@ -2,8 +2,7 @@ channels:
   - conda-forge
 
 dependencies:
-  - python=3.11.8
-  - numpy<2
+
   - nbgitpuller=1.2.*
   - datascience=0.17.5
   - plotly=5.19.*
@@ -15,14 +14,14 @@ dependencies:
   - conda-forge::ipyvuetify
   - conda-forge::bash_kernel
   - conda-forge::sentence-transformers
+  - conda-forge::pandas=2.2.*
   - pip
   - pip:
     - babypandas==0.1.7
-    - pandas==2.2.1
     - ipywidgets==8.1.5
     - otter-grader[grading,plugins]==6.1.3
     - solara==1.38.0
-    - nbconvert[webpdf]==7.16.3
+    - nbconvert[webpdf]==7.17.2
     - pytest-playwright==0.4.4
     - ISLP==0.4.0
     - astroML==1.0.2.post1
